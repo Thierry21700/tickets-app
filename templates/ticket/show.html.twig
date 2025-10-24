@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket #{{ ticket.id }} - Système de Tickets{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-ticket-alt me-2"></i>Ticket #{{ ticket.id }}
+                </h2>
+                <span class="badge bg-{{ ticket.status.name == 'Nouveau' ? 'primary' : (ticket.status.name == 'Ouvert' ? 'warning' : (ticket.status.name == 'Résolu' ? 'success' : 'secondary')) }} fs-6">
+                    {{ ticket.status.name }}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong><i class="fas fa-envelope me-2"></i>Auteur :</strong>
+                        <p class="mb-0">{{ ticket.author }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong><i class="fas fa-tag me-2"></i>Catégorie :</strong>
+                        <p class="mb-0">{{ ticket.category.name }}</p>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong><i class="fas fa-calendar-plus me-2"></i>Date d'ouverture :</strong>
+                        <p class="mb-0">{{ ticket.openingDate|date('d/m/Y à H:i') }}</p>
+                    </div>
+                    {% if ticket.closingDate %}
+                        <div class="col-md-6">
+                            <strong><i class="fas fa-calendar-check me-2"></i>Date de clôture :</strong>
+                            <p class="mb-0">{{ ticket.closingDate|date('d/m/Y à H:i') }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if ticket.responsible %}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong><i class="fas fa-user me-2"></i>Responsable :</strong>
+                            <p class="mb-0">{{ ticket.responsible.name }} ({{ ticket.responsible.email }})</p>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <strong><i class="fas fa-file-text me-2"></i>Description :</strong>
+                    <div class="border rounded p-3 mt-2 bg-light">
+                        {{ ticket.description|nl2br }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-cogs me-2"></i>Actions
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="d-grid gap-2 mb-3">
+                        <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Modifier le ticket
+                        </a>
+                    </div>
+                {% endif %}
+                
+                <form method="post" action="{{ path('app_ticket_update_status', {'id': ticket.id}) }}">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Changer le statut :</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="{{ ticket.status.id }}" selected>{{ ticket.status.name }}</option>
+                            {% for status in statuses %}
+                                {% if status.id != ticket.status.id %}
+                                    <option value="{{ status.id }}">{{ status.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-save me-2"></i>Mettre à jour
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Informations
+                </h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <strong>ID :</strong> #{{ ticket.id }}<br>
+                    <strong>Statut actuel :</strong> {{ ticket.status.name }}<br>
+                    {% if ticket.responsible %}
+                        <strong>Assigné à :</strong> {{ ticket.responsible.name }}
+                    {% else %}
+                        <strong>Assigné à :</strong> Non assigné
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{{ path('app_ticket_index') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+    </a>
+</div>
+{% endblock %}

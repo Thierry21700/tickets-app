@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Tickets - Système de Tickets{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-list me-2"></i>Liste des Tickets</h1>
+    <div class="text-end">
+        <small class="text-muted">Développé par <strong>Thierry Goutier</strong></small>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mb-4">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary active" data-filter="all">Tous</button>
+        {% for status in statuses %}
+            <button type="button" class="btn btn-outline-primary" data-filter="{{ status.name|lower }}">
+                {{ status.name }}
+            </button>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row">
+    {% for ticket in tickets %}
+        <div class="col-md-6 col-lg-4 mb-4 ticket-card" data-status="{{ ticket.status.name|lower }}">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="badge bg-{{ ticket.status.name == 'Nouveau' ? 'primary' : (ticket.status.name == 'Ouvert' ? 'warning' : (ticket.status.name == 'Résolu' ? 'success' : 'secondary')) }}">
+                        {{ ticket.status.name }}
+                    </span>
+                    <small class="text-muted">
+                        <i class="fas fa-calendar me-1"></i>{{ ticket.openingDate|date('d/m/Y H:i') }}
+                    </small>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-tag me-2"></i>{{ ticket.category.name }}
+                    </h5>
+                    <p class="card-text">{{ ticket.description|length > 100 ? ticket.description|slice(0, 100) ~ '...' : ticket.description }}</p>
+                    <div class="mb-2">
+                        <small class="text-muted">
+                            <i class="fas fa-envelope me-1"></i>{{ ticket.author }}
+                        </small>
+                    </div>
+                    {% if ticket.responsible %}
+                        <div class="mb-2">
+                            <small class="text-info">
+                                <i class="fas fa-user me-1"></i>{{ ticket.responsible.name }}
+                            </small>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-eye me-1"></i>Voir
+                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-edit me-1"></i>Modifier
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>Aucun ticket trouvé.
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const ticketCards = document.querySelectorAll('.ticket-card');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            
+            // Mettre à jour les boutons actifs
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('btn-outline-primary');
+                btn.classList.remove('btn-primary');
+            });
+            this.classList.add('active');
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('btn-primary');
+            
+            // Filtrer les cartes
+            ticketCards.forEach(card => {
+                if (filter === 'all' || card.dataset.status === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}
