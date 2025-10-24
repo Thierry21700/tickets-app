@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Système de Tickets{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-cog me-2"></i>Tableau de bord</h1>
+    <div class="text-end">
+        <small class="text-muted">Développé par <strong>Thierry Goutier</strong></small>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-tag fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Catégories</h5>
+                <p class="card-text">Gérer les catégories de tickets</p>
+                <a href="{{ path('app_admin_category_index') }}" class="btn btn-primary">
+                    <i class="fas fa-list me-2"></i>Voir les catégories
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-flag fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">Statuts</h5>
+                <p class="card-text">Gérer les statuts de tickets</p>
+                <a href="{{ path('app_admin_status_index') }}" class="btn btn-warning">
+                    <i class="fas fa-list me-2"></i>Voir les statuts
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-user fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Responsables</h5>
+                <p class="card-text">Gérer les responsables</p>
+                <a href="{{ path('app_admin_responsible_index') }}" class="btn btn-info">
+                    <i class="fas fa-list me-2"></i>Voir les responsables
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-ticket-alt fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Tickets</h5>
+                <p class="card-text">Voir tous les tickets</p>
+                <a href="{{ path('app_ticket_index') }}" class="btn btn-success">
+                    <i class="fas fa-list me-2"></i>Voir les tickets
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Statistiques rapides
+                </h3>
+                <small class="text-muted">Total des tickets : <strong>{{ totalTickets }}</strong></small>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-plus-circle fa-2x text-primary mb-2"></i>
+                            <h4 class="text-primary">{{ nouveauxCount }}</h4>
+                            <p class="mb-0">Tickets récents</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                            <h4 class="text-warning">{{ ouvertsCount }}</h4>
+                            <p class="mb-0">Tickets ouverts</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                            <h4 class="text-success">{{ resolusCount }}</h4>
+                            <p class="mb-0">Tickets traités</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-archive fa-2x text-secondary mb-2"></i>
+                            <h4 class="text-secondary">{{ fermesCount }}</h4>
+                            <p class="mb-0">Tickets clos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
