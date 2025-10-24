@@ -1,18 +1,10 @@
 # Symfony
 /var/
 /vendor/
-.env.local
-.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-.env.prod
 
 # Cache and logs
 /var/cache/
