@@ -1,0 +1,207 @@
+# Symfony
+/var/
+/vendor/
+.env.local
+.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.prod
+
+# Cache and logs
+/var/cache/
+/var/log/
+/var/sessions/
+/var/tmp/
+
+# Composer
+/vendor/
+composer.phar
+
+# IDE and editors
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node.js (si vous utilisez Webpack Encore)
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+/var/data.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# PHP
+*.php~
+*.php.bak
+
+# Symfony specific
+/var/cache/
+/var/log/
+/var/sessions/
+/var/tmp/
+/public/bundles/
+/public/build/
+
+# Documentation générée
+*.pdf
+!README.pdf
+
+# Tests
+/phpunit.xml
+/phpunit.xml.dist
+/.phpunit.result.cache
+
+# Coverage
+/coverage/
+/.phpunit.cache/
+
+# Local configuration
+/.env.local
+/.env.*.local
+
+# Security
+/config/secrets/
+
+# Build artifacts
+/public/build/
+/public/bundles/
+
+# IDE specific
+/.idea/
+/.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Logs
+*.log
+logs/
+log/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Symfony Flex
+/flex.json
+
+# Symfony recipes
+/.symfony/
+
+# Local development
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Generated files
+/public/build/
+/public/bundles/
+/var/cache/
+/var/log/
+/var/sessions/
+/var/tmp/
+
+# Keep important files
+!.gitkeep
+!README.md
+!DOCUMENTATION.md
+!generate_pdf.php
+!composer.json
+!composer.lock
+!symfony.lock
